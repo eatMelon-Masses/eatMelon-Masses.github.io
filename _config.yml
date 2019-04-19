@@ -1,0 +1,26 @@
+# Site settings
+name: yiezi
+email: 11764404@qq.com
+author: eatMelon-Masses
+url: https://eatmelon-masses.github.io/
+resume_site: 
+github: https://github.com/eatMelon-Masses
+baseurl: ""
+description: Actually, less is more!
+meta_description: yiezi;个人博客;
+motto: It's our wits that make us men.
+banner: 学而不思则罔，思而不学则殆。
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
+paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+github_username: eatMelon-Masses
+
+# Build settings
+markdown: kramdown
+
+baidu_analysis: 
+
