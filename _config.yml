@@ -24,3 +24,5 @@ markdown: kramdown
 
 baidu_analysis: 
 
+
+theme: jekyll-theme-cayman
