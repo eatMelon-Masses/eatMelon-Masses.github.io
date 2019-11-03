@@ -1,0 +1,196 @@
+I"K$<ul id="markdown-toc">
+  <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
+  <li><a href="#场景" id="markdown-toc-场景">场景</a></li>
+  <li><a href="#架构" id="markdown-toc-架构">架构</a></li>
+  <li><a href="#基本使用" id="markdown-toc-基本使用">基本使用</a>    <ul>
+      <li><a href="#客户端" id="markdown-toc-客户端">客户端</a>        <ul>
+          <li><a href="#1-我们可以直接输入docker查看docker客户端所有命令选项" id="markdown-toc-1-我们可以直接输入docker查看docker客户端所有命令选项">1. 我们可以直接输入docker，查看docker客户端所有命令选项。</a></li>
+          <li><a href="#2-也可以直接输入-docker-command-help-查看指定命令基本使用" id="markdown-toc-2-也可以直接输入-docker-command-help-查看指定命令基本使用">2. 也可以直接输入 docker command –help 查看指定命令基本使用</a></li>
+          <li><a href="#3-运行一个web应用" id="markdown-toc-3-运行一个web应用">3. 运行一个web应用</a></li>
+          <li><a href="#4查看容器" id="markdown-toc-4查看容器">4.查看容器</a></li>
+        </ul>
+      </li>
+      <li><a href="#容器使用" id="markdown-toc-容器使用">容器使用</a>        <ul>
+          <li><a href="#1-停止容器" id="markdown-toc-1-停止容器">1. 停止容器</a></li>
+          <li><a href="#2-重启容器" id="markdown-toc-2-重启容器">2. 重启容器</a></li>
+          <li><a href="#3-启动容器" id="markdown-toc-3-启动容器">3. 启动容器</a></li>
+          <li><a href="#4移除容器" id="markdown-toc-4移除容器">4.移除容器</a></li>
+        </ul>
+      </li>
+      <li><a href="#镜像使用" id="markdown-toc-镜像使用">镜像使用</a>        <ul>
+          <li><a href="#知识点" id="markdown-toc-知识点">知识点:</a></li>
+          <li><a href="#1-列出镜像列表" id="markdown-toc-1-列出镜像列表">1. 列出镜像列表</a></li>
+          <li><a href="#2-获取一个新镜像" id="markdown-toc-2-获取一个新镜像">2. 获取一个新镜像</a></li>
+          <li><a href="#3-查找镜像" id="markdown-toc-3-查找镜像">3. 查找镜像</a></li>
+          <li><a href="#4-创建镜像" id="markdown-toc-4-创建镜像">4. 创建镜像</a></li>
+          <li><a href="#5-更新镜像" id="markdown-toc-5-更新镜像">5. 更新镜像</a></li>
+          <li><a href="#6-构建镜像" id="markdown-toc-6-构建镜像">6. 构建镜像</a></li>
+          <li><a href="#7-push镜像到远程仓库" id="markdown-toc-7-push镜像到远程仓库">7. push镜像到远程仓库</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="背景">背景</h3>
+
+<p>Docker 是一个<a href="https://baike.baidu.com/item/%E5%BC%80%E6%BA%90/246339">开源</a>的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后/发布到任何流行的 <a href="https://baike.baidu.com/item/Linux">Linux</a>或Windows 机器上，也可以实现<a href="https://baike.baidu.com/item/%E8%99%9A%E6%8B%9F%E5%8C%96/547949">虚拟化</a>。容器是完全使用<a href="https://baike.baidu.com/item/%E6%B2%99%E7%AE%B1/393318">沙箱</a>机制，相互之间不会有任何接口。</p>
+
+<h3 id="场景">场景</h3>
+
+<ul>
+  <li>
+    <p>Web 应用的自动化打包和发布。</p>
+  </li>
+  <li>
+    <p>在服务型环境中部署和调整数据库或其他的后台应用。</p>
+  </li>
+</ul>
+
+<h3 id="架构">架构</h3>
+<ul>
+  <li>Docker 使用客户端-服务器 (C/S) 架构模式，使用远程API来管理和创建Docker容器。</li>
+  <li>Docker 容器通过 Docker 镜像来创建。</li>
+  <li>容器与镜像的关系类似于面向对象编程中的对象与类。</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>DOCKER容器</th>
+      <th>面向对象</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>容器</td>
+      <td>对象</td>
+    </tr>
+    <tr>
+      <td>镜像</td>
+      <td>类</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/styles\images\0001\001.png" alt="架构图" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Docker 镜像(Images)</th>
+      <th>Docker 镜像是用于创建 Docker 容器的模板。</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Docker 容器(Container)</td>
+      <td>容器是独立运行的一个或一组应用。</td>
+    </tr>
+    <tr>
+      <td>Docker 客户端(Client)</td>
+      <td>Docker 客户端通过命令行或者其他工具使用 Docker API (<a href="https://docs.docker.com/reference/api/docker_remote_api">https://docs.docker.com/reference/api/docker_remote_api</a>) 与 Docker 的守护进程通信。</td>
+    </tr>
+    <tr>
+      <td>Docker 主机(Host)</td>
+      <td>一个物理或者虚拟的机器用于执行 Docker 守护进程和容器。</td>
+    </tr>
+    <tr>
+      <td>Docker 仓库(Registry)</td>
+      <td>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。Docker Hub(<a href="https://hub.docker.com/">https://hub.docker.com</a>) 提供了庞大的镜像集合供使用。</td>
+    </tr>
+    <tr>
+      <td>Docker Machine</td>
+      <td>Docker Machine是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker，比如VirtualBox、 Digital Ocean、Microsoft Azure。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="基本使用">基本使用</h3>
+<h4 id="客户端">客户端</h4>
+
+<h5 id="1-我们可以直接输入docker查看docker客户端所有命令选项">1. 我们可以直接输入docker，查看docker客户端所有命令选项。</h5>
+<h5 id="2-也可以直接输入-docker-command-help-查看指定命令基本使用">2. 也可以直接输入 docker command –help 查看指定命令基本使用</h5>
+<h5 id="3-运行一个web应用">3. 运行一个web应用</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull training/webapp #载入镜像
+docker run -d -P training/webapp python app.py 
+</code></pre></div></div>
+<p>参数说明</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-d：让容器在后台运行
+-P: 将容器后台使用的网络端口映射到我们主机上
+</code></pre></div></div>
+
+<h5 id="4查看容器">4.查看容器</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>runoob@runoob:~#  docker ps
+CONTAINER ID        IMAGE               COMMAND    ...        PORTS                
+d3d5e39ed9d3        training/webapp     "python app.py"     ...        0.0.0.0:32769-&gt;5000/tcp
+
+		用-p来设置不一样的端口
+		runoob@runoob:~$ docker run -d -p 5000:5000 training/webapp python app.py
+</code></pre></div></div>
+
+<h4 id="容器使用">容器使用</h4>
+
+<h5 id="1-停止容器">1. 停止容器</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stop [CONTAINER ID | NAMES]
+</code></pre></div></div>
+<h5 id="2-重启容器">2. 重启容器</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker restart  [CONTAINER ID | NAMES]
+</code></pre></div></div>
+<h5 id="3-启动容器">3. 启动容器</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker start  [CONTAINER ID | NAMES]
+</code></pre></div></div>
+<h5 id="4移除容器">4.移除容器</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker rm  [CONTAINER ID | NAMES]   	
+</code></pre></div></div>
+
+<h4 id="镜像使用">镜像使用</h4>
+<h5 id="知识点">知识点:</h5>
+<ul>
+  <li>管理本地的Docker 主机镜像</li>
+  <li>创建镜像</li>
+</ul>
+
+<hr />
+
+<h5 id="1-列出镜像列表">1. 列出镜像列表</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div></div>
+<h5 id="2-获取一个新镜像">2. 获取一个新镜像</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull centos:6 	
+</code></pre></div></div>
+<h5 id="3-查找镜像">3. 查找镜像</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker search centos
+</code></pre></div></div>
+<h5 id="4-创建镜像">4. 创建镜像</h5>
+ 	- 从已经创建容器中更新镜像,并且提交这个镜像.
+ 	- 使用 Dockerfile 指令来创建一个新镜像
+<h5 id="5-更新镜像">5. 更新镜像</h5>
+ 	更新镜像之前我们需要使用镜像创建一个容器
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it centos:7 /bin/bash
+
+运行任意指令修改该容器环境
+窗口输入exit退出容器环境
+我们通过commit命令来提交副本
+
+root@123:~$ docker commit -m="has update" -a="authorName" e218edb10161 username/centos:v2
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-m:备注信息	
+e218edb10161:容器id
+username: docker hub 账户名
+centos:仓储名
+v2:tag名
+</code></pre></div></div>
+
+<hr />
+
+<p>以下部分未完待续…..</p>
+<h5 id="6-构建镜像">6. 构建镜像</h5>
+
+<h5 id="7-push镜像到远程仓库">7. push镜像到远程仓库</h5>
+
+:ET
