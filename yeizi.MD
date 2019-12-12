@@ -58,22 +58,10 @@ permalink: /yiezi/
 - 理论基础: 数据结构与算法/设计模式/java基础
 - Web开发：java
 - Web框架：springboot/mybatis
-- 后端工具：idea/maven/docker/centos
+- 后端工具：idea/maven/docker/centos/vmware
 - 数据库相关：MySQL
 - 版本管理、文档和自动化部署工具：git/jenkins/jiar/禅道
 - 单元测试：junit/mockito/powermock
 - 云和开放平台：openstack
-      
-# 技能清单
-（我一般主张将技能清单写入到工作经历里边去。不过很难完整，所以有这么一段也不错）
 
-以下均为我熟练使用的技能
-
-- Web开发：PHP/Hack/Node
-- Web框架：ThinkPHP/Yaf/Yii/Lavarel/LazyPHP
-- 后端工具：idea/maven/docker/centos
-- 数据库相关：MySQL
-- 版本管理、文档和自动化部署工具：git/jenkins/jiar/禅道
-- 单元测试：junit/mockito/powermock
-- 云和开放平台：openstack
       
