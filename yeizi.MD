@@ -44,6 +44,7 @@ permalink: /yiezi/
 ## 技术文章
 
 - [docker容器基本使用](https://eatmelon-masses.github.io/2019/10/20/docker%E5%AE%B9%E5%99%A8%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/)
+- [算法在工作中的应用-如何提升算法能力？](https://www.icloud.com/keynote/0WG7Zz0MeWvTdr-R4VJ8Eq-eA)
 
 
 ## 演讲和讲义
@@ -54,13 +55,13 @@ permalink: /yiezi/
 # 技能清单
 
 以下均为我熟练使用的技能
-- 理论基础: 数据结构与算法/设计模式/java基础
-- Web开发：java
-- Web框架：springboot/mybatis
-- 后端工具：idea/maven/docker/centos/vmware
-- 数据库相关：MySQL
-- 版本管理、文档和自动化部署工具：git/jenkins/jiar/禅道
-- 单元测试：junit/mockito/powermock
-- 云和开放平台：openstack
+- **理论基础**: 数据结构与算法/设计模式/java基础
+- **Web开发**：java
+- **Web框架**：springboot/mybatis
+- **后端工具**：idea/maven/docker/centos/vmware
+- **数据库相关**：MySQL
+- **版本管理、文档和自动化部署工具**：git/jenkins/jiar/禅道
+- **单元测试**：junit/mockito/powermock
+- **云和开放平台**：openstack
 
       
