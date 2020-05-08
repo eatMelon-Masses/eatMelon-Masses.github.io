@@ -1,3 +1,3 @@
-FROM jekyll/jekyll:latest
+FROM jekyll/minimal
 COPY . /srv/jekyll
 CMD jekyll serve
