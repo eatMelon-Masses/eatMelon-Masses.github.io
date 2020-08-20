@@ -1,0 +1,75 @@
+---
+layout: post
+title:  "kmp算法"
+date:   2020-8-20 17:31:01 +0800
+categories: 算法
+tag: kmp算法
+---
+
+* content
+{:toc}
+
+# 字符串匹配的KMP算法（非原创）
+
+举例：有一个字符串“BBC ABCDAB ABCDABCDABDE”,我想知道，里面是否包含另外一个字符串“ABCDABD”?
+1. 
+    index:0123456789
+     str1:BBC ABCDAB ABCDABCDABDE
+     str2:ABCDABD
+    首先字符串str1与字符串str2比较第一个字符子串，B和A不同，所以搜索向后移动一位。
+
+2. 
+
+    index:0123456789
+     str1:BBC ABCDAB ABCDABCDABDE
+     str2: ABCDABD
+    因为B与A还是不匹配，所以str2再向后移动。
+
+3. 
+
+    index:0123456789
+     str1:BBC ABCDAB ABCDABCDABDE
+     str2:    ABCDABD
+    因为“ ” 与“D” 不匹配，所以str2需要向后移动，按照暴力法，我们应该向后移动一位然后从新和str2第一位开始匹配。
+
+4. 
+
+    index:0123456789
+     str1:BBC ABCDAB ABCDABCDABDE
+     str2:     ABCDABD   
+    这样把str2向后移动一位再与str1比较，这样虽然比较慢，但是需要把搜索过的位置再匹配一次。
+
+5. 
+
+    index:0123456789
+     str1:BBC ABCDAB ABCDABCDABDE
+     str2:    ABCDABD
+    一个基本的想法是当“ ”与“D” 不匹配时，我们其实知道“ABCDAB”这几位都是相同的，kmp算法的核心是，设法利用这个已知的信息，不要把“搜索位置”移动回已经比较过的位置，继续向后移动，这样就提高了效率。
+
+6. 
+    怎么做到这点，算出一张部分匹配表。
+
+     index:0123456789
+      str1:ABCDABD
+   部分匹配:0000120
+   已知空格与D不匹配时，前六个字符“ABCDAB”是匹配的。查表可知，最后一个匹配字符B对应的“部分匹配值”为2，因此按照以下共识酸楚向后移动的位数
+    移动位数=已匹配的字符串 - 对应的部分匹配值
+    因此 6-2 等于4 ，所以将搜素词向后移动4位。
+
+7. 
+    前缀和后缀定义
+    字符串： “bread”
+    前缀：b br bre brea 
+    后缀：read ead ad d
+
+8. 
+       搜索词：A B C D A B D
+    部分匹配值：0 0 0 0 1 2 0
+
+    A的前缀和后缀都为空集合，共有元素长度为0.
+    AB的前缀为[A],后缀为[B]，共有元素长度为0.
+    ABC的前缀为[A AB],后缀为[BC C],共有元素长度为0.
+    ABCD的前缀为[A AB ABC],后缀为[BCD CD D],共有元素长度为0.
+    ABCDA的前缀为[A AB ABC ABCD],后缀为[BCDA CDA DA A],共有元素长度为1.
+    ABCDAB的前缀为[A AB ABC ABCDA],后缀为[BCDAB CDAB DAB AB B],共有长度为2.
+注：本文总体思路摘自 阮一峰大佬博客。
