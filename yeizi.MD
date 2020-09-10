@@ -66,8 +66,8 @@ permalink: /yiezi/
 - **Web框架**：springboot/mybatis
 - **后端工具**：idea/maven/docker/centos/vmware
 - **数据库相关**：MySQL
-- **版本管理、文档和自动化部署工具**：git/jenkins/jiar/禅道
+- **版本管理、文档和自动化部署工具**：git/jenkins/jira/禅道
 - **单元测试**：junit/mockito/powermock
-- **云和开放平台**：openstack
+- **云和开放平台**：esxi、docker
 
       
