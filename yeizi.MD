@@ -17,7 +17,7 @@ permalink: /yiezi/
  - 技术博客：https://eatmelon-masses.github.io
  - Github：https://github.com/eatMelon-Masses 
 
- - 期望职位：JAVA 中级工程师
+ - 期望职位：JAVA 服务器软件工程师
  - 期望城市：成都
 
 
