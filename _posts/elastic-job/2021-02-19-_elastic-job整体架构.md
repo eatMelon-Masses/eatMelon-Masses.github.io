@@ -34,3 +34,22 @@ tag: elastic-job
 
     在应用程序启动时，在其内嵌的elastic-job-lite组件会向zookeeper注册该实例的信息，并触发选举（此时可能以及启动了其他实例），从众多实例中国呢选举出一个leader，让其执行任务。当到达任务执行时间时，elastic-job-lite组件会调用由应用程序实现的任务业务逻辑，任务执行后会产生任务执行记录。当应用程序的某一个实例宕机时，zookeeper组件会感知到并重新触发leader选举。
 ## zookeeper 组件功能详解
+zookeeper 是一个分布式一致性协调服务，它是apache hadoop的一个子项目，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项管理等。可以把zookeeper想象为一个特殊的数据库，它维护着一个类似文件系统的树形数据结构
+![zookeeper数据结构](https://cvws.icloud-content.com/B/AQNl7Xjc6LLD-yBKubkQd7Z_cGw9ASIYlQupafMnE9JWXves3XfvAR3c/zookeeper数据结构.png?o=Armj4EdGYvPYCkyM3FlOIyDRIR_MQc1aOU_EoaFKTIsk&v=1&x=3&a=CAogNA_VjvhmOJwEBuvep0ZYHB9gQmlYHBuLr1693vOqr3ISbxDU4YDz-y4Y9Ni38_suIgEAUgR_cGw9WgTvAR3caidAC9pyh1G6LCyVmVcUlUp81sU_LQgDbXHX_PBmnY8ChvRD6162dylyJ1MElPdTFaCe4oCWbxcjjWaWjVeEuWdBKFhT-EOusTxw5c-0uWfcag&e=1613807610&fl=&r=f28c341c-8940-4f89-a0d6-922c40915ed5-1&k=49yAfmENcPyviXZAAdxZBA&ckc=com.apple.clouddocs&ckz=com.apple.CloudDocs&p=17&s=tMva9hz0ZcDbcjDsz3udDItCTMw&cd=i)
+
+每个子目录和文件系统一样，我们都能够自由都增加、删除子节点，唯一的不同在于子节点可以存储数据。
+zookeeper为什么称之为一致性协调服务呢？
+因为zookeeper拥有数据监听通知机制，客户端注册监听它关心的子节点，当子node发生变化时（数据改变删除、子目录增加删除）时，zookeeper会通知所有客户端。 
+
+zookeeper在elastic-job项目中主要有以下作用
+- elastic-job 依赖zookeeper完成对执行任务信息的存储（如任务名称、任务参与实例、任务执行策略等）
+- elastic-job 依赖zookeeper实现选举机制，在任务执行实例数量变化时（如在快速上手的启动新实例或停止实例），会触发选举机制来决定让哪个实例去执行该任务。
+### 任务信息保存
+使用ZooInspector客户端（有现成的jar包供下载）工具连接zookeeper服务器
+![zooInspector客户端使用截图](https://cvws.icloud-content.com/B/AWqYfClGs4xkD9jSz0dtstC9sv0mAeOywAQ8vwVl1Ad9TWCbyg-f2c-D/zooInspector工具使用截图.png?o=AjfA-9G-tcg2yVOQlh_QXCgyMkBVDH6uMseQeqg6H5nv&v=1&x=3&a=CAogMt8CpsqQF7t07bLhJ6TdIFix_RzefX6eRXs0ShWD-nwSbxCs7Nry-y4YzOOR8_suIgEAUgS9sv0mWgSf2c-DaifS-cx407GEHrHwRqDJ8y3x5iSyjTIqiPIpkx6_enOdEaWLoKoPsSRyJwFSTJ5_NYticcoW2efEOnaJ3IQ7AMnbnZyDedsdcIwwSEe3Admkmg&e=1613806989&fl=&r=991e609e-f5bf-433c-8fc3-1222a57f2733-1&k=vyKVeWSHVCp2MmQMftEjNw&ckc=com.apple.clouddocs&ckz=com.apple.CloudDocs&p=17&s=2b3YVdj8GGe7k62yiizUExbd8jY&cd=i)
+
+1. elastic-job-example-java : 任务的命名空间
+2. config：记录了任务的配置信息
+3. instances节点： 同一个任务下的elastic-job的部署实例。一台机器可以启动多个job实例，jar包。instances的命名是[ip+@-@+PID]
+4. leader： 任务实例的主节点信息，通过zookeeper的主节点选举，选出来的主节点信息。下面的子节点分为election，sharding和failover三个子节点。分别用于主节点选举、分片和失效转移处理。eletion下面的instance节点显示了当前主节点的实例ID：job instance id。latch节点也是一个永久节点用于选举时候实现分布式锁。sharding节点下面有一个临时节点nessary，表示是否需要重新分片。
+5. sharding： 任务的分片信息，子节点是分片序列号，从0开始，从这个节点可以看出哪个分片在哪个实例上执行
