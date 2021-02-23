@@ -53,3 +53,22 @@ zookeeper在elastic-job项目中主要有以下作用
 3. instances节点： 同一个任务下的elastic-job的部署实例。一台机器可以启动多个job实例，jar包。instances的命名是[ip+@-@+PID]
 4. leader： 任务实例的主节点信息，通过zookeeper的主节点选举，选出来的主节点信息。下面的子节点分为election，sharding和failover三个子节点。分别用于主节点选举、分片和失效转移处理。eletion下面的instance节点显示了当前主节点的实例ID：job instance id。latch节点也是一个永久节点用于选举时候实现分布式锁。sharding节点下面有一个临时节点nessary，表示是否需要重新分片。
 5. sharding： 任务的分片信息，子节点是分片序列号，从0开始，从这个节点可以看出哪个分片在哪个实例上执行
+6. latch：分布式锁相关的
+### 任务执行实例选举
+若要了解elastic-job 使用zookeeper是如何实现选举的，就需要首先了解zookeeper的四种类型的enode
+
+- PERSISTENT-持久化目录节点
+     客户端创建该类型node，此客户端与zookeeper断开连接后该节点依旧存在，如果创建了重复的key，比如/data，第二次创建会失败。   
+- PERSISTENT-SEQUENTIAL-持久化顺序编号目录节点
+     客户端与zookeeper断开连接后该节点依旧存在，允许创建相同的key，zookeeper给该节点名称进行顺序编号，如zk会在后面加上一串数字比如/data/data000001，递增。
+- EPHEMERAL-临时目录节点
+    客户端与zookeeper断开连接后，该节点被删除，不允许重复创建相同key
+- EPHEMERAL-SEQUMENTAL-临时顺序编号目录节点
+    客户端与zookeeper断开连接后，该节点被删除，允许重复创建相同的key，依然采取顺序编号机制。
+实例选举实现过程分析
+每个elastic-job 的任务执行实例作为zookeeper的客户端来擦欧哦zookeeper的znode
+1. 任意一个实例启动时首先创建一个/server 的PERSISTENGT节点
+2. 多个实例同时创建/server/leader EPHEMERAL子节点
+3. /server/leader子节点只能创建一个，后创建的会失败。创建成功的实例被选为leader节点，用来执行任务。
+4. 所有任务实例监听/server/leader的变化，一旦节点被删除，就重新进行选举，抢占式的创建/server/leader节点，谁创建成功谁就是leader
+
