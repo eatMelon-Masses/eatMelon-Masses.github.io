@@ -60,14 +60,12 @@ permalink: /yiezi/
 4. 设计多探针协同探测解决方案，web端服务负责指令下发等功能（包括指令下发、通过分配协同算法，拆分大作业），实现多探针并发探测同一网段资源，提升70%探扫效率。
 5. 原本架构是java应用解析流量，获取元数据，保存在数据库，但是吞吐量，受应用程序和数据库限制严重，通过改造 elastic beats(流量解析开源项目)，实现自定义应用协议元数据标识获取，把流量元数据清洗成标准json格式，通过elastic beats -> logstash -> moloch 通过动态表达式配置实现云应用识别，新增识别应用，开发人员只需要关注表达式配置。
 
-***
+
 ## 开源项目
 
-  - [leetcode个人题库](https://github.com/eatMelon-Masses/learning-leetcode) :leetcode 300道左右题解，还在不断添加中。。。
+  - https://github.com/eatMelon-Masses/learning-leetcode （leetcode 300道左右题解，还在不断添加中。。。）
 
-## 技术文章
 
-- [个人博客](blog.yiezi.ml)
 
 ## 演讲和讲义
 
