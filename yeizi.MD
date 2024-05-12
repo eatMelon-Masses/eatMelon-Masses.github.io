@@ -10,7 +10,7 @@ permalink: /yiezi/
 - tel: 19983293144
 - Email：z11764404@aliyun.com
 # 个人信息
-- 本科-计算机科学与技术专业，1996年，工作年限：5年，期望职位：java，期望城市：成都
+- 本科-计算机科学与技术专业，1996年，工作年限：5年，期望职位：java高级开发，期望城市：成都
 - 技术博客：[https://eatmelon-masses.github.io](https://eatmelon-masses.github.io)
 - 开源项目：[https://github.com/eatMelon-Masses/learning-leetcode](https://github.com/eatMelon-Masses/learning-leetcode)
 # 个人优势
