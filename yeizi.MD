@@ -6,9 +6,9 @@ permalink: /yiezi/
 
 # 联系方式
 
-
+- name：周晔
+- tel: 19983293144
 - Email：z11764404@aliyun.com
-- wx: zy11764404
 # 个人信息
 - 本科-计算机科学与技术专业，1996年，工作年限：5年，期望职位：java，期望城市：成都
 - 技术博客：[https://eatmelon-masses.github.io](https://eatmelon-masses.github.io)
